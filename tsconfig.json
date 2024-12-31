@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Set the target to ES2020 or higher to support modern features
+    "module": "ESNext", // Use ES Modules
+    "rootDir": "./backend/src", // Specify the root folder within your source files
+    "outDir": "./backend/dist", // Specify the output folder for compiled files
+    "esModuleInterop": true, // Enable interoperability between CommonJS and ES Modules
+    "strict": true, // Enable strict type checking
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in import paths
+    "skipLibCheck": true, // Skip library file checks for faster compilation
+    "moduleResolution": "node", // Resolve modules like Node.js
+    "resolveJsonModule": true, // Allow importing .json files as modules
+    "noEmit": false // Allow emitting compiled files
+  },
+  "include": ["./backend/src"] // Include the source directory for compilation
+}
