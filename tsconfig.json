@@ -10,7 +10,7 @@
     "skipLibCheck": true, // Skip library file checks for faster compilation
     "moduleResolution": "node", // Resolve modules like Node.js
     "resolveJsonModule": true, // Allow importing .json files as modules
-    "noEmit": false // Allow emitting compiled files
+    "noEmit": false ,// Allow emitting compiled files
   },
   "include": ["./backend/src"] // Include the source directory for compilation
 }
