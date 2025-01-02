@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { UserType } from "../types/userTypes.js";
 
 const UserSchema = new Schema<
-  UserType & { isAdmin: boolean; profileImage: string }
+  UserType & { isAdmin: boolean; profileImage: string; isBlocked: boolean }
 >({
   username: {
     type: String,
@@ -26,6 +26,12 @@ const UserSchema = new Schema<
   profileImage: {
     type: String,
     required: false,
+    default: "",
+  },
+  isBlocked: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
 });
 

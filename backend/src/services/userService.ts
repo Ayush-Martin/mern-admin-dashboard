@@ -1,3 +1,4 @@
+import { Mongoose, ObjectId } from "mongoose";
 import User from "../models/userModel.js";
 import { UserType } from "../types/userTypes.js";
 import errorCreator from "../utils/error.js";
@@ -21,5 +22,10 @@ export const addUserService = async (
 
 export const findUserByEmailService = async (email: string) => {
   const user = await User.findOne({ email });
+  return user;
+};
+
+export const findUserByIdService = async (id: ObjectId | string) => {
+  const user = await User.findById(id);
   return user;
 };

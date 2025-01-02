@@ -1,14 +1,38 @@
 import { Input } from "./index";
 import { ValidationErrorText, Button1 } from "./index";
+import useSignin from "../hooks/useSignin";
 
 const SignIn = () => {
+  const {
+    email,
+    password,
+    emailError,
+    passwordError,
+    emailChangeHandler,
+    passwordChangeHandler,
+    handleSubmit,
+  } = useSignin();
   return (
-    <div className="flex flex-col w-full gap-2">
-      <Input type="text" placeHolder="email" />
-      <ValidationErrorText error={"validation error"} />
-      <Input type="text" placeHolder="password" />
-      <ValidationErrorText error={"validation error"} />
-      <Button1 text="Sign In" />
+    <div className="flex flex-col w-full gap-3">
+      <Input
+        type="text"
+        placeHolder="email"
+        value={email}
+        inputChangeHandler={emailChangeHandler}
+      />
+      {emailError && <ValidationErrorText error={emailError} />}
+      <Input
+        type="text"
+        placeHolder="password"
+        value={password}
+        inputChangeHandler={passwordChangeHandler}
+      />
+      {passwordError && <ValidationErrorText error={passwordError} />}
+      <Button1
+        clickHandler={handleSubmit}
+        text="Sign In"
+        disabled={!!(emailError || passwordError || !email || !password)}
+      />
     </div>
   );
 };

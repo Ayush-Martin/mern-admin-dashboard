@@ -1,29 +1,16 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import {
-  checkValidText,
-  checkValidEmail,
-  checkValidPassword,
-} from "../utils/validation";
-import { signUpUserApi } from "../features/user/userApi";
+import { checkValidEmail, checkValidPassword } from "../utils/validation";
+import { signInUserApi } from "../features/user/userApi";
 import { AppDispatch } from "../redux/store";
 
-const useSignup = () => {
-  const [username, setUsername] = useState<string>("");
+const useSignin = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [usernameError, setUsernameError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
 
   const dispatch: AppDispatch = useDispatch();
-
-  const usernameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const err = checkValidText(value, "username", 3, 15);
-    setUsernameError(err);
-    setUsername(value);
-  };
 
   const emailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -40,21 +27,18 @@ const useSignup = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(signUpUserApi({ username, email, password }));
+    dispatch(signInUserApi({ email, password }));
   };
 
   return {
-    username,
     email,
     password,
-    usernameError,
     emailError,
     passwordError,
-    usernameChangeHandler,
     emailChangeHandler,
     passwordChangeHandler,
     handleSubmit,
   };
 };
 
-export default useSignup;
+export default useSignin;
