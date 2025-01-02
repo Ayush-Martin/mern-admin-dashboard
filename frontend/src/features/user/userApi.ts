@@ -61,6 +61,38 @@ export const signUpUserApi = createAsyncThunk<
   }
 });
 
+export const updateUserApi = createAsyncThunk<
+  any,
+  {
+    username: string;
+    email: string;
+    profileImage: File | null;
+  }
+>("user/updateUser", async (updatedData, { rejectWithValue }) => {
+  try {
+    const formData = new FormData();
+    formData.append("username", updatedData.username);
+    formData.append("email", updatedData.email);
+    formData.append(
+      "profileImage",
+      updatedData.profileImage ? updatedData.profileImage : ""
+    );
+
+    const response = await axios.put("/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data.data;
+  } catch (err: any) {
+    console.error(err);
+    return rejectWithValue(
+      err.response?.data?.message || "Something went wrong. Please try again."
+    );
+  }
+});
+
 export const signOutApi = createAsyncThunk("user/signOutUser", () => {
   axios.get("/auth/signout", { withCredentials: true });
 });

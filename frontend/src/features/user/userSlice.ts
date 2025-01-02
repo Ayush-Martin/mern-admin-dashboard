@@ -6,11 +6,13 @@ import {
   signInUserApi,
   signUpUserApi,
   signOutApi,
+  updateUserApi,
 } from "./userApi";
 import {
   errorNotification,
   successNotification,
 } from "../../utils/notifications";
+
 
 const initialState = {
   id: "",
@@ -55,6 +57,10 @@ const userSlice = createSlice({
       state.isAdmin = isAdmin;
       state.profileImage = profileImage;
       state.accessToken = action.payload;
+    });
+
+    builder.addCase(refreshTokenApi.pending, () => {
+      console.log("hi hello");
     });
 
     builder.addCase(refreshTokenApi.rejected, (state) => {
@@ -102,6 +108,20 @@ const userSlice = createSlice({
       state.isAdmin = false;
       state.profileImage = "";
       state.accessToken = "";
+    });
+
+    builder.addCase(updateUserApi.fulfilled, (state, action) => {
+      const { username, email, profileImage } = action.payload;
+
+      state.username = username;
+      state.email = email;
+      state.profileImage = profileImage;
+      successNotification(action.payload.message);
+    });
+
+    builder.addCase(updateUserApi.rejected, (state, action) => {
+      const error = action?.payload as any;
+      errorNotification(error);
     });
   },
 });

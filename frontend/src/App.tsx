@@ -22,7 +22,7 @@ const App = () => {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          {authRouter.map((route) =>  
+          {authRouter.map((route) =>
             !accessToken ? (
               <Route
                 key={route.path}

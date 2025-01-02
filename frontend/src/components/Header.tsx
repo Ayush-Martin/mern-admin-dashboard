@@ -21,7 +21,7 @@ const Header = () => {
             Home
           </Link>
           <Link
-            to={"/"}
+            to={"/profile"}
             className="flex items-center gap-2 text-white hover:text-orange-500"
           >
             <FaUser />

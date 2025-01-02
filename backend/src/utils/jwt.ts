@@ -9,11 +9,11 @@ export const createAccessToken = (
   id: ObjectId,
   username: string,
   email: string,
-  profilePhoto: string,
+  profileImage: string,
   isAdmin: boolean = false
 ) => {
   return jwt.sign(
-    { id, sub: id, username, email, profilePhoto, isAdmin },
+    { id, sub: id, username, email, profileImage, isAdmin },
     ACCESS_TOKEN_SECRET,
     { expiresIn: "10m" }
   );

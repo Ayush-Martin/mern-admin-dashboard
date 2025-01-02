@@ -29,3 +29,21 @@ export const findUserByIdService = async (id: ObjectId | string) => {
   const user = await User.findById(id);
   return user;
 };
+
+export const updateUserService = async (
+  userId: ObjectId | string,
+  username: string,
+  email: string,
+  profileImage: string
+) => {
+  const userData = await User.findOne({
+    $or: [{ username }, { email }],
+    _id: { $ne: userId },
+  });
+
+  if (userData) {
+    errorCreator("username or email exist", StatusCodes.CONFLICT);
+  }
+
+  await User.updateOne({ _id: userId }, { username, email, profileImage });
+};
