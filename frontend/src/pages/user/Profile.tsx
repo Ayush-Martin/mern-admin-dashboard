@@ -1,8 +1,9 @@
-import bg1 from "../../assets/bg1.jpg";
 import { Button1, Header, Input } from "../../components";
 import { MdEdit, MdDelete } from "react-icons/md";
 import useProfile from "../../hooks/useProfile";
 import { ValidationErrorText } from "../../components";
+import { Link } from "react-router-dom";
+import { FaHome, FaUser } from "react-icons/fa";
 
 const Profile = () => {
   const {
@@ -15,16 +16,31 @@ const Profile = () => {
     emailChangeHandler,
     profileImageChangeHandler,
     updateProfile,
+    removeProfileImage,
   } = useProfile();
 
   return (
-    <div className="relative">
-      <img src={bg1} className="object-cover w-screen h-screen" />
-      <Header />
-      <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center">
-        <div className="flex flex-col items-center m-auto bg-white rounded-md gap-7 p-7 bg-opacity-10 w-96">
+    <div>
+      <Header>
+        <Link
+          to={"/"}
+          className="flex items-center gap-2 text-white hover:text-orange-500"
+        >
+          <FaHome />
+          Home
+        </Link>
+        <Link
+          to={"/profile"}
+          className="flex items-center gap-2 text-white hover:text-orange-500"
+        >
+          <FaUser />
+          Profile
+        </Link>
+      </Header>
+      <div className="flex items-center justify-center w-full h-full">
+        <div className="flex flex-col items-center h-auto max-h-full bg-white rounded-md gap-7 p-7 bg-opacity-10 w-96">
           <div className="flex flex-col items-center gap-3">
-            <div className="w-24 h-24 ">
+            <div className="w-24 h-24">
               {profileImage ? (
                 <img
                   src={profileImage}
@@ -48,9 +64,13 @@ const Profile = () => {
                 <MdEdit />
               </label>
 
-              <MdDelete />
+              <button>
+                <MdDelete onClick={() => removeProfileImage()} />
+              </button>
             </div>
           </div>
+
+          {/* Input fields */}
           <div className="flex flex-col gap-2 w-60">
             <Input
               placeHolder="username"
@@ -67,6 +87,7 @@ const Profile = () => {
             />
             {emailError && <ValidationErrorText error={emailError} />}
           </div>
+
           <div>
             <Button1 text="save" clickHandler={updateProfile} />
           </div>

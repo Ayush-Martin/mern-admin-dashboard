@@ -45,5 +45,16 @@ export const updateUserService = async (
     errorCreator("username or email exist", StatusCodes.CONFLICT);
   }
 
-  await User.updateOne({ _id: userId }, { username, email, profileImage });
+  let updatedProfileImage = `http://localhost:5000/uploads/${profileImage}`;
+
+  if (!profileImage) {
+    const user = await User.findById(userId);
+    updatedProfileImage = user?.profileImage as string;
+  }
+
+  return await User.findOneAndUpdate(
+    { _id: userId },
+    { username, email, profileImage: updatedProfileImage },
+    { new: true }
+  );
 };

@@ -70,6 +70,7 @@ export const updateUserApi = createAsyncThunk<
   }
 >("user/updateUser", async (updatedData, { rejectWithValue }) => {
   try {
+
     const formData = new FormData();
     formData.append("username", updatedData.username);
     formData.append("email", updatedData.email);
@@ -83,8 +84,8 @@ export const updateUserApi = createAsyncThunk<
         "Content-Type": "multipart/form-data",
       },
     });
-
-    return response.data.data;
+    console.log(response);
+    return response.data;
   } catch (err: any) {
     console.error(err);
     return rejectWithValue(

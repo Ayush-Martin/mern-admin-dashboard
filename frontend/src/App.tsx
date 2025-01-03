@@ -1,61 +1,35 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { authRouter, userRouter } from "./router";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "./redux/store";
-import { useEffect } from "react";
-import { refreshTokenApi } from "./features/user/userApi";
+import { Route, Routes } from "react-router-dom";
+import { Layout, ProtectedRoutes } from "./components";
+import Home from "./pages/user/Home";
+import Auth from "./pages/auth/auth";
+import Dashboard from "./pages/admin/Dashboard";
+import Profile from "./pages/user/Profile";
+import useRefreshToken from "./hooks/useRefreshToken";
+import EditUser from "./pages/admin/EditUser";
+import AddUser from "./pages/admin/AddUser";
 
 const App = () => {
-  const { accessToken } = useSelector((state: RootState) => state.user);
-  const dispatch: AppDispatch = useDispatch();
-  console.log(accessToken);
-  useEffect(() => {
-    if (!accessToken) {
-      dispatch(refreshTokenApi());
-    }
-  }, [accessToken, dispatch]);
+  useRefreshToken();
 
   return (
-    <>
-      <ToastContainer />
-      <BrowserRouter>
-        <Routes>
-          {authRouter.map((route) =>
-            !accessToken ? (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={<route.component />}
-              />
-            ) : (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={<Navigate to={"/"} />}
-              />
-            )
-          )}
+    <Routes>
+      <Route element={<Layout />}>
+        <Route element={<ProtectedRoutes role="auth" />}>
+          <Route path="/auth" element={<Auth />} />
+        </Route>
 
-          {userRouter.map((route) =>
-            accessToken ? (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={<route.component />}
-              />
-            ) : (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={<Navigate to={"/auth"} />}
-              />
-            )
-          )}
-        </Routes>
-      </BrowserRouter>
-    </>
+        <Route element={<ProtectedRoutes role="user" />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        <Route element={<ProtectedRoutes role="admin" />}>
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin/:userId" element={<EditUser />} />
+          <Route path="/admin/add" element={<AddUser />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 };
 

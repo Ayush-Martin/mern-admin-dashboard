@@ -27,10 +27,15 @@ export const checkUserAuthenticated = async (
 
         let userData = await User.findById(payload?.sub);
 
-        if (userData && userData?.isBlocked) {
+        if (!userData) {
+          return;
+        }
+
+        if (userData?.isBlocked) {
           errorCreator("you are blocked by admin", StatusCodes.UNAUTHORIZED);
         }
 
+        req.userId = String(userData?._id);
         next();
       } catch (err) {
         next(err);

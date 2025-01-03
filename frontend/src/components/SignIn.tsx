@@ -22,7 +22,7 @@ const SignIn = () => {
       />
       {emailError && <ValidationErrorText error={emailError} />}
       <Input
-        type="text"
+        type="password"
         placeHolder="password"
         value={password}
         inputChangeHandler={passwordChangeHandler}

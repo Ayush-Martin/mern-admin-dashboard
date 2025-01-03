@@ -46,6 +46,10 @@ const useProfile = () => {
     }
   };
 
+  const removeProfileImage = () => {
+    setProfileImage("");
+  };
+
   const updateProfile = () => {
     dispatch(
       updateUserApi({ username, email, profileImage: updatedProfileImage })
@@ -62,6 +66,7 @@ const useProfile = () => {
     emailChangeHandler,
     profileImageChangeHandler,
     updateProfile,
+    removeProfileImage
   };
 };
 

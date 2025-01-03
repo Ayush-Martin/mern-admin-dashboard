@@ -1,32 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
-import { FaHome } from "react-icons/fa";
-import { FaUser } from "react-icons/fa6";
 import { signOutApi } from "../features/user/userApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
+import { ReactNode } from "react";
 
-const Header = () => {
+const Header = ({ children }: { children: ReactNode }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   return (
-    <div className="absolute z-40 w-full px-48 top-5 bg-opacity-10">
+    <div className="w-full px-3 md:px-28 lg:px-48 my-7 bg-opacity-10">
       <div className="flex items-center justify-center w-full h-full py-5 bg-white rounded-md bg-opacity-10">
         <div className="flex items-center gap-5 text-xl">
-          <Link
-            to={"/"}
-            className="flex items-center gap-2 text-white hover:text-orange-500"
-          >
-            <FaHome />
-            Home
-          </Link>
-          <Link
-            to={"/profile"}
-            className="flex items-center gap-2 text-white hover:text-orange-500"
-          >
-            <FaUser />
-            Profile
-          </Link>
+          {children}
           <button
             className="flex items-center gap-2 text-white hover:text-orange-500"
             onClick={() => {

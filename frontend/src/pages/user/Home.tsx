@@ -1,12 +1,27 @@
-import bg1 from "../../assets/bg1.jpg";
+import { Link } from "react-router-dom";
 import { Header } from "../../components";
+import { FaHome, FaUser } from "react-icons/fa";
 
 const Home = () => {
   return (
-    <div className="relative">
-      <img src={bg1} className="object-cover w-screen h-screen" />
-      <Header/>
-      <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center">
+    <div>
+      <Header>
+        <Link
+          to={"/"}
+          className="flex items-center gap-2 text-white hover:text-orange-500"
+        >
+          <FaHome />
+          Home
+        </Link>
+        <Link
+          to={"/profile"}
+          className="flex items-center gap-2 text-white hover:text-orange-500"
+        >
+          <FaUser />
+          Profile
+        </Link>
+      </Header>
+      <div className="items-center justify-center">
         <div className="flex flex-col gap-16 m-auto bg-white rounded-md p-7 bg-opacity-10 w-96 "></div>
       </div>
     </div>

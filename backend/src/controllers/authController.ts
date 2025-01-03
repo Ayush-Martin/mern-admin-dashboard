@@ -62,6 +62,11 @@ export const signin = async (
       return;
     }
 
+    if (user.isBlocked) {
+      errorCreator("You are blocked by admin", StatusCodes.UNAUTHORIZED);
+      return;
+    }
+
     const accessToken = createAccessToken(
       user.id,
       user.username,

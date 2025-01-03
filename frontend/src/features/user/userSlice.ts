@@ -13,7 +13,6 @@ import {
   successNotification,
 } from "../../utils/notifications";
 
-
 const initialState = {
   id: "",
   username: "",
@@ -57,6 +56,7 @@ const userSlice = createSlice({
       state.isAdmin = isAdmin;
       state.profileImage = profileImage;
       state.accessToken = action.payload;
+      sessionStorage.setItem("jwt", action.payload);
     });
 
     builder.addCase(refreshTokenApi.pending, () => {
@@ -108,11 +108,12 @@ const userSlice = createSlice({
       state.isAdmin = false;
       state.profileImage = "";
       state.accessToken = "";
+      sessionStorage.removeItem("jwt");
     });
 
     builder.addCase(updateUserApi.fulfilled, (state, action) => {
-      const { username, email, profileImage } = action.payload;
-
+      const { username, email, profileImage } = action.payload.data;
+      console.log(action.payload);
       state.username = username;
       state.email = email;
       state.profileImage = profileImage;
