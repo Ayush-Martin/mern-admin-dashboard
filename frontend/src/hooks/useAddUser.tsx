@@ -6,14 +6,15 @@ import {
 } from "../utils/validation";
 import axios from "axios";
 import { errorNotification, successNotification } from "../utils/notifications";
+import { ApiResponseError } from "../config/axiosConfig";
 
 const useAddUser = () => {
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [usernameError, setUsernameError] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const usernameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -41,8 +42,8 @@ const useAddUser = () => {
       const res = await axios.post("/admin", { username, email, password });
       successNotification(res.data.message);
     } catch (err) {
-      const responseError = err as any;
-      errorNotification(responseError.response.data.error);
+      const resErr = err as ApiResponseError;
+      errorNotification(resErr.response.data.error || "error while adding");
     }
   };
 

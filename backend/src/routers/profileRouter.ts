@@ -1,14 +1,17 @@
 import { Router } from "express";
-import upload from "../configs/multerConfig.js";
-import { updateProfile } from "../controllers/profileController.js";
-import { checkUserAuthenticated } from "../Middlewares/userAuth.js";
 const router = Router();
+import upload from "../configs/multerConfig.js";
 
-router.put(
-  "/",
-  upload.single("profileImage"),
-  checkUserAuthenticated,
-  updateProfile
-);
+//controllers
+import { updateProfile } from "../controllers/profileController.js";
+
+//middlewares
+import { checkUserAuthenticated } from "../Middlewares/userAuth.js";
+
+//setting up middleware for authentication
+router.use(checkUserAuthenticated);
+
+//route to update user profile
+router.put("/", upload.single("profileImage"), updateProfile);
 
 export default router;

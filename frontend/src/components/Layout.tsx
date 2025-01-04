@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-
 import bg1 from "../assets/bg1.jpg";
+import { FC } from "react";
 
-const Layout = () => {
+const Layout: FC = () => {
   return (
     <main className="relative w-full h-screen">
       <img src={bg1} className="object-cover w-full h-full" />

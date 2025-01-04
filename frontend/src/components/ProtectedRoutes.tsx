@@ -1,8 +1,13 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { FC } from "react";
 
-const ProtectedRoutes = ({ role }: { role: string }) => {
+interface ProtectedRoutesProps {
+  role: "admin" | "user" | "auth";
+}
+
+const ProtectedRoutes: FC<ProtectedRoutesProps> = ({ role }) => {
   const { accessToken, isAdmin } = useSelector(
     (state: RootState) => state.user
   );

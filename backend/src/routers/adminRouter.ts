@@ -1,4 +1,8 @@
 import { Router } from "express";
+const router = Router();
+import upload from "../configs/multerConfig.js";
+
+//controllers
 import {
   addUser,
   blockUnblockUser,
@@ -7,16 +11,21 @@ import {
   getUsers,
   updateUser,
 } from "../controllers/adminController.js";
-import upload from "../configs/multerConfig.js";
-const router = Router();
 
+//middlewares
+import { checkAdminAuthenticated } from "../Middlewares/adminAuth.js";
+
+//setting up middleware for authentication and authorization
+router.use(checkAdminAuthenticated);
+
+//dashboard
 router.route("/").get(getUsers).post(addUser);
 
 router
   .route("/:id")
-  .get(getUser)
-  .put(upload.single("profileImage"), updateUser)
-  .patch(blockUnblockUser)
-  .delete(deleteUser)
+  .get(getUser) //getting a user data
+  .put(upload.single("profileImage"), updateUser) //updated a user data
+  .patch(blockUnblockUser) //change blocked status of user
+  .delete(deleteUser); //deleting a user
 
 export default router;

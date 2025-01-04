@@ -1,16 +1,22 @@
 import { Request, Response, NextFunction } from "express";
 import { UserType } from "../types/userTypes.js";
+import { StatusCodes } from "../utils/statusCode.js";
+import errorCreator from "../utils/error.js";
+import { compareHashPassword, hashPassword } from "../utils/password.js";
+import { createAccessToken, createRefreshToken } from "../utils/jwt.js";
+
+//services
 import {
   addUserService,
   findUserByEmailService,
   findUserByIdService,
 } from "../services/userService.js";
-import { StatusCodes } from "../utils/statusCode.js";
-import errorCreator from "../utils/error.js";
-import { compareHashPassword, hashPassword } from "../utils/password.js";
-import { createAccessToken, createRefreshToken } from "../utils/jwt.js";
-import RefreshToken from "../models/refreshTokenModel.js";
 
+//models
+import RefreshToken from "../models/refreshTokenModel.js";
+import { successResponse } from "../utils/responseCreators.js";
+
+//register user
 export const signup = async (
   req: Request,
   res: Response,
@@ -29,12 +35,13 @@ export const signup = async (
 
     res
       .status(StatusCodes.CREATED)
-      .json({ success: true, message: "new user created" });
+      .json(successResponse("register successfully"));
   } catch (err) {
     next(err);
   }
 };
 
+//login user
 export const signin = async (
   req: Request,
   res: Response,
@@ -76,20 +83,17 @@ export const signin = async (
     );
 
     const refreshToken = await createRefreshToken(user.id);
+    const validDays = Number(process.env.REFRESH_TOKEN_EXPIRATION_DAYS) || 7;
 
     res
       .cookie("refreshToken", refreshToken, {
-        httpOnly: false,
+        httpOnly: true,
         secure: false,
         sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: validDays * 24 * 60 * 60 * 1000,
       })
       .status(StatusCodes.OK)
-      .json({
-        success: true,
-        message: "user is authenticated",
-        data: accessToken,
-      });
+      .json(successResponse("user is authenticated", accessToken));
   } catch (err) {
     next(err);
   }
@@ -108,7 +112,7 @@ export const signout = async (
     await RefreshToken.deleteOne({ token: refreshToken });
 
     res.clearCookie("refreshToken", { httpOnly: true, path: "/" });
-    res.status(200).json({ message: "Logged out successfully!" });
+    res.status(200).json(successResponse("you are now logged out"));
   } catch (err) {
     next(err);
   }

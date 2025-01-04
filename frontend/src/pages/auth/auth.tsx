@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { SignUp, SignIn } from "../../components/index";
 
-const Auth = () => {
+const Auth:FC = () => {
   const [signIn, setSignIn] = useState(true);
 
   return (

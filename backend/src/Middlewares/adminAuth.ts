@@ -3,10 +3,10 @@ import { StatusCodes } from "../utils/statusCode.js";
 import errorCreator from "../utils/error.js";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "secret";
 
-//check user is authenticated
-export const checkUserAuthenticated = async (
+//function to check the authentication and authorization of admin
+export const checkAdminAuthenticated = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -35,6 +35,10 @@ export const checkUserAuthenticated = async (
 
         if (userData?.isBlocked) {
           errorCreator("you are blocked by admin", StatusCodes.FORBIDDEN);
+        }
+
+        if (!userData.isAdmin) {
+          errorCreator("you are not admin", StatusCodes.FORBIDDEN);
         }
 
         req.userId = String(userData?._id);

@@ -2,8 +2,12 @@ import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
 import RefreshToken from "../models/refreshTokenModel.js";
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "secret";
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "secret";
+const ACCESS_TOKEN_EXPIRATION_MINUTES =
+  Number(process.env.ACCESS_TOKEN_EXPIRATION_MINUTES) | 5;
+const REFRESH_TOKEN_EXPIRATION_DAYS =
+  Number(process.env.REFRESH_TOKEN_EXPIRATION_DAYS) | 7;
 
 export const createAccessToken = (
   id: ObjectId,
@@ -15,13 +19,13 @@ export const createAccessToken = (
   return jwt.sign(
     { id, sub: id, username, email, profileImage, isAdmin },
     ACCESS_TOKEN_SECRET,
-    { expiresIn: "10m" }
+    { expiresIn: `${ACCESS_TOKEN_EXPIRATION_MINUTES}m` }
   );
 };
 
 export const createRefreshToken = async (id: ObjectId) => {
   const token = jwt.sign({ id, sub: id }, REFRESH_TOKEN_SECRET, {
-    expiresIn: "7d",
+    expiresIn: `${REFRESH_TOKEN_EXPIRATION_DAYS}d`,
   });
   const newRefreshToken = new RefreshToken({ token });
   await newRefreshToken.save();

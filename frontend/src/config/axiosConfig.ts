@@ -1,17 +1,19 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { ApiResponse } from "../types/responseTypes";
 
 axios.defaults.baseURL = "http://localhost:5000";
 
 axios.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("jwt") || "";
-    console.log(1);
     config.headers.Authorization = `Bearer ${token}`;
-    console.log(2);
     return config;
   },
   (err) => Promise.reject(err)
 );
 
-export { AxiosError };
+export interface ApiResponseError extends AxiosError {
+  response: AxiosResponse<ApiResponse>;
+}
+
 export default axios;

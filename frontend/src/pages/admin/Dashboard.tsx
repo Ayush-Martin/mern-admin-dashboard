@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Button1, Header, ListItem } from "../../components";
+import { Button, Header, ListItem } from "../../components";
 import { IoSearch } from "react-icons/io5";
 import { FaHome } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { getUsersApi } from "../../features/admin/adminApi";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-const Dashboard = () => {
+const Dashboard: FC = () => {
   const { users } = useSelector((state: RootState) => state.admin);
   const dispatch: AppDispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -21,7 +21,6 @@ const Dashboard = () => {
     dispatch(getUsersApi(search));
   };
 
-  console.log(users);
   return (
     <div>
       <Header>
@@ -52,8 +51,9 @@ const Dashboard = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <Button1
+            <Button
               text="Add User"
+              disabled={false}
               clickHandler={() => navigate("/admin/add")}
             />
           </div>

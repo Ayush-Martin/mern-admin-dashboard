@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "../utils/statusCode.js";
 import errorCreator from "../utils/error.js";
+import { successResponse } from "../utils/responseCreators.js";
+
+//services
 import { updateUserService } from "../services/userService.js";
 
+//updated user profile info
 export const updateProfile = async (
   req: Request,
   res: Response,
@@ -15,14 +19,13 @@ export const updateProfile = async (
       errorCreator("all fields are required", StatusCodes.BAD_REQUEST);
       return;
     }
-    console.log(1);
+
     const profileImage = req.file ? req.file.filename : "";
 
     if (!req.userId) {
-      console.log(req.userId);
       return;
     }
-    console.log(2);
+
     const updatedUserData = await updateUserService(
       req.userId,
       username,
@@ -30,15 +33,13 @@ export const updateProfile = async (
       profileImage
     );
 
-    res.status(StatusCodes.OK).json({
-      success: true,
-      message: "profile updated",
-      data: {
+    res.status(StatusCodes.OK).json(
+      successResponse("profile updated", {
         username: updatedUserData?.username,
         email: updatedUserData?.email,
         profileImage: updatedUserData?.profileImage,
-      },
-    });
+      })
+    );
   } catch (err) {
     next(err);
   }

@@ -3,9 +3,13 @@ import { FiLogOut } from "react-icons/fi";
 import { signOutApi } from "../features/user/userApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
-const Header = ({ children }: { children: ReactNode }) => {
+interface HeaderProps {
+  children: ReactNode;
+}
+
+const Header: FC<HeaderProps> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   return (

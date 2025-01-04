@@ -1,4 +1,4 @@
-import { Button1, Header, Input } from "../../components";
+import { Button, Header, Input } from "../../components";
 import { MdEdit, MdDelete } from "react-icons/md";
 import useProfile from "../../hooks/useProfile";
 import { ValidationErrorText } from "../../components";
@@ -22,6 +22,7 @@ const Profile = () => {
   return (
     <div>
       <Header>
+        <></>
         <Link
           to={"/"}
           className="flex items-center gap-2 text-white hover:text-orange-500"
@@ -89,7 +90,11 @@ const Profile = () => {
           </div>
 
           <div>
-            <Button1 text="save" clickHandler={updateProfile} />
+            <Button
+              text="save"
+              disabled={!!(emailError || !email || usernameError || !username)}
+              clickHandler={updateProfile}
+            />
           </div>
         </div>
       </div>

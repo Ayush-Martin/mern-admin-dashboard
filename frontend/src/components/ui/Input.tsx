@@ -1,15 +1,17 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 
-const Input = ({
-  type,
-  placeHolder,
-  value,
-  inputChangeHandler,
-}: {
+interface InputProps {
   type: string;
   placeHolder: string;
   value: string;
   inputChangeHandler: (arg: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Input: FC<InputProps> = ({
+  type,
+  placeHolder,
+  value,
+  inputChangeHandler,
 }) => {
   const [isFocus, setIsFocus] = useState(false);
   return (

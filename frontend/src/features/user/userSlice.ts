@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -48,19 +47,15 @@ const userSlice = createSlice({
         email: string;
         isAdmin: boolean;
         profileImage: string;
-      } = jwtDecode(action.payload);
+      } = jwtDecode(action.payload.data);
 
       state.id = id;
       state.username = username;
       state.email = email;
       state.isAdmin = isAdmin;
       state.profileImage = profileImage;
-      state.accessToken = action.payload;
-      sessionStorage.setItem("jwt", action.payload);
-    });
-
-    builder.addCase(refreshTokenApi.pending, () => {
-      console.log("hi hello");
+      state.accessToken = action.payload.data;
+      sessionStorage.setItem("jwt", action.payload.data);
     });
 
     builder.addCase(refreshTokenApi.rejected, (state) => {
@@ -83,21 +78,22 @@ const userSlice = createSlice({
       state.isAdmin = isAdmin;
       state.profileImage = profileImage;
       state.accessToken = action.payload.data;
-      successNotification(action.payload.message);
+      successNotification(action.payload.message || "logged in successfully");
+      sessionStorage.setItem("jwt", action.payload.data);
     });
 
     builder.addCase(signInUserApi.rejected, (state, action) => {
-      const error = action?.payload as any;
+      const error = action?.payload as string;
       state = initialState;
       errorNotification(error);
     });
 
     builder.addCase(signUpUserApi.fulfilled, (state, action) => {
-      successNotification(action.payload);
+      successNotification(action.payload.message || "register successfully");
     });
 
     builder.addCase(signUpUserApi.rejected, (state, action) => {
-      const error = action?.payload as any;
+      const error = action?.payload as string;
       errorNotification(error);
     });
 
@@ -113,15 +109,14 @@ const userSlice = createSlice({
 
     builder.addCase(updateUserApi.fulfilled, (state, action) => {
       const { username, email, profileImage } = action.payload.data;
-      console.log(action.payload);
       state.username = username;
       state.email = email;
       state.profileImage = profileImage;
-      successNotification(action.payload.message);
+      successNotification(action.payload.message || "updated");
     });
 
     builder.addCase(updateUserApi.rejected, (state, action) => {
-      const error = action?.payload as any;
+      const error = action?.payload as string;
       errorNotification(error);
     });
   },

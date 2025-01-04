@@ -1,13 +1,13 @@
-import { Button1, Header, Input } from "../../components";
+import { Button, Header, Input } from "../../components";
 import { MdEdit, MdDelete } from "react-icons/md";
 import useEditUser from "../../hooks/useEditUser";
 import { ValidationErrorText } from "../../components";
 import { Link, useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import axios from "axios";
 
-const Profile = () => {
+const Profile: FC = () => {
   const {
     username,
     email,
@@ -97,7 +97,11 @@ const Profile = () => {
           </div>
 
           <div>
-            <Button1 text="save" clickHandler={updateProfile} />
+            <Button
+              text="save"
+              disabled={!!(emailError || !email || usernameError || !username)}
+              clickHandler={updateProfile}
+            />
           </div>
         </div>
       </div>

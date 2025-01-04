@@ -1,49 +1,44 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../config/axiosConfig";
+import axios, { ApiResponseError } from "../../config/axiosConfig";
+import { ApiResponse } from "../../types/responseTypes";
 
-export const refreshTokenApi = createAsyncThunk<any>(
+export const refreshTokenApi = createAsyncThunk<ApiResponse>(
   "user/refreshToken",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("fdf");
       const response = await axios.get("/auth/refresh", {
         withCredentials: true,
       });
-      console.log(response);
-      return response.data.data;
-    } catch (err: any) {
+      return response.data;
+    } catch (err) {
+      const resError = err as ApiResponseError;
       console.log(err);
-      return rejectWithValue(
-        err.response?.data?.message || "Something went wrong. Please try again."
-      );
+      return rejectWithValue(resError.response.data.error);
     }
   }
 );
 
 export const signInUserApi = createAsyncThunk<
-  any,
+  ApiResponse,
   {
     email: string;
     password: string;
   }
 >("user/signInUser", async (userData, { rejectWithValue }) => {
   try {
-    console.log("signin");
     const response = await axios.post("/auth/signin", userData, {
       withCredentials: true,
     });
     return response.data;
-  } catch (err: any) {
+  } catch (err) {
+    const resError = err as ApiResponseError;
     console.log(err);
-    return rejectWithValue(
-      err.response?.data?.message || "Something went wrong. Please try again."
-    );
+    return rejectWithValue(resError.response.data.error);
   }
 });
 
 export const signUpUserApi = createAsyncThunk<
-  string,
+  ApiResponse,
   {
     username: string;
     email: string;
@@ -52,17 +47,16 @@ export const signUpUserApi = createAsyncThunk<
 >("user/signUpUser", async (userData, { rejectWithValue }) => {
   try {
     const response = await axios.post("/auth/signup", userData);
-    return response.data.message;
-  } catch (err: any) {
+    return response.data;
+  } catch (err) {
+    const resError = err as ApiResponseError;
     console.log(err);
-    return rejectWithValue(
-      err.response?.data?.message || "Something went wrong. Please try again."
-    );
+    return rejectWithValue(resError.response.data.error);
   }
 });
 
 export const updateUserApi = createAsyncThunk<
-  any,
+  ApiResponse,
   {
     username: string;
     email: string;
@@ -70,7 +64,6 @@ export const updateUserApi = createAsyncThunk<
   }
 >("user/updateUser", async (updatedData, { rejectWithValue }) => {
   try {
-
     const formData = new FormData();
     formData.append("username", updatedData.username);
     formData.append("email", updatedData.email);
@@ -84,13 +77,11 @@ export const updateUserApi = createAsyncThunk<
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
     return response.data;
-  } catch (err: any) {
-    console.error(err);
-    return rejectWithValue(
-      err.response?.data?.message || "Something went wrong. Please try again."
-    );
+  } catch (err) {
+    const resError = err as ApiResponseError;
+    console.log(err);
+    return rejectWithValue(resError.response.data.error);
   }
 });
 

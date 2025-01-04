@@ -1,35 +1,35 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { MdBlock, MdEdit, MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { CgUnblock } from "react-icons/cg";
 import { errorNotification, successNotification } from "../utils/notifications";
-import axios from "../config/axiosConfig";
+import axios, { ApiResponseError } from "../config/axiosConfig";
 import { getUsersApi } from "../features/admin/adminApi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 
-const ListItem = ({
-  username,
-  email,
-  id,
-  isBlocked,
-}: {
+interface ListItemProps {
   username: string;
   email: string;
   id: string;
   isBlocked: boolean;
-}) => {
+}
+
+const ListItem: FC<ListItemProps> = ({ username, email, id, isBlocked }) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const [blocked, setBlocked] = useState(isBlocked);
+
   const blockUnblockHandler = async () => {
     try {
       await axios.patch(`/admin/${id}`);
       successNotification(blocked ? "unblocked" : "blocked");
       setBlocked((prev) => !prev);
     } catch (err) {
-      const resError = err as any;
-      errorNotification(resError.response.data.message);
+      const resError = err as ApiResponseError;
+      errorNotification(
+        resError.response.data.error || "some thing went wrong"
+      );
     }
   };
 
@@ -39,8 +39,10 @@ const ListItem = ({
       successNotification(res.data.message);
       dispatch(getUsersApi(""));
     } catch (err) {
-      const resError = err as any;
-      errorNotification(resError.response.data.message);
+      const resError = err as ApiResponseError;
+      errorNotification(
+        resError.response.data.error || "some thing went wrong"
+      );
     }
   };
 
@@ -61,7 +63,7 @@ const ListItem = ({
         )}
 
         <button
-          className="text-yellow-400 "
+          className="text-cyan-500 "
           onClick={() => navigate(`/admin/${id}`)}
         >
           <MdEdit />

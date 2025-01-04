@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { checkValidEmail, checkValidText } from "../utils/validation";
 import { ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
-import axios, { AxiosError } from "../config/axiosConfig";
+import axios, { ApiResponseError } from "../config/axiosConfig";
 import { errorNotification, successNotification } from "../utils/notifications";
 
 const useEditUser = () => {
@@ -20,7 +20,7 @@ const useEditUser = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(`/admin/${userId}`);
-        const { username, email, profileImage } = res.data.userData;
+        const { username, email, profileImage } = res.data.data;
         setUsername(username);
         setEmail(email);
         setProfileImage(profileImage);
@@ -30,7 +30,7 @@ const useEditUser = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [userId]);
 
   const usernameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -64,7 +64,6 @@ const useEditUser = () => {
 
   const updateProfile = async () => {
     try {
-      console.log(username, email, profileImage);
       const formData = new FormData();
       formData.append("username", username);
       formData.append("email", email);
@@ -72,7 +71,6 @@ const useEditUser = () => {
         "profileImage",
         updatedProfileImage ? updatedProfileImage : ""
       );
-      console.log(formData);
       const res = await axios.put(`/admin/${userId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -85,8 +83,8 @@ const useEditUser = () => {
       setProfileImage(resData.profileImage);
       successNotification("profile updated");
     } catch (err) {
-      const responseErr = err as any;
-      errorNotification(responseErr.response.data.message);
+      const resErr = err as ApiResponseError;
+      errorNotification(resErr.response.data.error || "error while updating");
     }
   };
 

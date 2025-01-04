@@ -1,8 +1,9 @@
 import { Input } from "./index";
-import { ValidationErrorText, Button1 } from "./index";
+import { ValidationErrorText, Button } from "./index";
 import useSignin from "../hooks/useSignin";
+import { FC } from "react";
 
-const SignIn = () => {
+const SignIn: FC = () => {
   const {
     email,
     password,
@@ -28,7 +29,7 @@ const SignIn = () => {
         inputChangeHandler={passwordChangeHandler}
       />
       {passwordError && <ValidationErrorText error={passwordError} />}
-      <Button1
+      <Button
         clickHandler={handleSubmit}
         text="Sign In"
         disabled={!!(emailError || passwordError || !email || !password)}

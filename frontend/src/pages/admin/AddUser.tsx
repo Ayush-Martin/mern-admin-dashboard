@@ -1,9 +1,10 @@
 import { FaHome } from "react-icons/fa";
-import { Button1, Header, Input, ValidationErrorText } from "../../components";
+import { Button, Header, Input, ValidationErrorText } from "../../components";
 import { Link } from "react-router-dom";
 import useAddUser from "../../hooks/useAddUser";
+import { FC } from "react";
 
-const AddUser = () => {
+const AddUser: FC = () => {
   const {
     username,
     email,
@@ -52,7 +53,7 @@ const AddUser = () => {
               inputChangeHandler={passwordChangeHandler}
             />
             {passwordError && <ValidationErrorText error={passwordError} />}
-            <Button1
+            <Button
               clickHandler={handleSubmit}
               text="Add"
               disabled={

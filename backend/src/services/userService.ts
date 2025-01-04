@@ -1,9 +1,9 @@
-import { Mongoose, ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 import User from "../models/userModel.js";
-import { UserType } from "../types/userTypes.js";
 import errorCreator from "../utils/error.js";
 import { StatusCodes } from "../utils/statusCode.js";
 
+//used to add or register user to database
 export const addUserService = async (
   username: string,
   email: string,
@@ -20,16 +20,19 @@ export const addUserService = async (
   await newUser.save();
 };
 
+//return data of a user by email
 export const findUserByEmailService = async (email: string) => {
   const user = await User.findOne({ email });
   return user;
 };
 
+//return data of a user by id
 export const findUserByIdService = async (id: ObjectId | string) => {
   const user = await User.findById(id);
   return user;
 };
 
+//update user data
 export const updateUserService = async (
   userId: ObjectId | string,
   username: string,
@@ -45,7 +48,8 @@ export const updateUserService = async (
     errorCreator("username or email exist", StatusCodes.CONFLICT);
   }
 
-  let updatedProfileImage = `http://localhost:5000/uploads/${profileImage}`;
+  const BACKEND_DOMAIN = process.env.BACKEND_DOMAIN || "http://localhost:5000";
+  let updatedProfileImage = `${BACKEND_DOMAIN}/uploads/${profileImage}`;
 
   if (!profileImage) {
     const user = await User.findById(userId);

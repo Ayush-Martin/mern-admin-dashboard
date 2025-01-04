@@ -4,12 +4,11 @@ import Home from "./pages/user/Home";
 import Auth from "./pages/auth/auth";
 import Dashboard from "./pages/admin/Dashboard";
 import Profile from "./pages/user/Profile";
-import useRefreshToken from "./hooks/useRefreshToken";
 import EditUser from "./pages/admin/EditUser";
 import AddUser from "./pages/admin/AddUser";
 
 const App = () => {
-  useRefreshToken();
+  // useRefreshToken();
 
   return (
     <Routes>
