@@ -5,9 +5,9 @@ import RefreshToken from "../models/refreshTokenModel.js";
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "secret";
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "secret";
 const ACCESS_TOKEN_EXPIRATION_MINUTES =
-  Number(process.env.ACCESS_TOKEN_EXPIRATION_MINUTES) | 5;
+  Number(process.env.ACCESS_TOKEN_EXPIRATION_MINUTES) || 5;
 const REFRESH_TOKEN_EXPIRATION_DAYS =
-  Number(process.env.REFRESH_TOKEN_EXPIRATION_DAYS) | 7;
+  Number(process.env.REFRESH_TOKEN_EXPIRATION_DAYS) || 7;
 
 export const createAccessToken = (
   id: ObjectId,
