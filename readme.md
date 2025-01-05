@@ -1,3 +1,4 @@
+
 # MERN Admin Dashboard and User Management App
 
 ![Dashboard Preview](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153734.png)
@@ -104,17 +105,25 @@ This is a feature-rich **Admin Dashboard and User Management App** built with th
 
 ### Dashboard
 
-![login-web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153540.png)
-![login-mobile](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153800.png)
-![register-web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153608.png)
-![register-phone](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153808.png)
-![home](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153630.png)
-![profile-web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153642.png)
-![profile-phone](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153842.png)
-![dashboard-web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153734.png)
-![dashboard-phone](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153908.png)
+![Login Web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153540.png)
+![Register Web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153608.png)
 
----
+![Home Web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153630.png)
+![Dashboard Web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153734.png)
+
+![Profile Web](https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153642.png)
+
+### Mobile Images
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px;">
+    <img src="https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153800.png" alt="Login Mobile" style="width: 48%; height: auto;">
+    <img src="https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153808.png" alt="Register Mobile" style="width: 48%; height: auto;">
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px;">
+    <img src="https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153842.png" alt="Profile Mobile" style="width: 48%; height: auto;">
+    <img src="https://raw.githubusercontent.com/Ayush-Martin/mern-admin-dashboard/refs/heads/main/preview/Screenshot%202025-01-05%20153908.png" alt="Dashboard Mobile" style="width: 48%; height: auto;">
+</div>
 
 ---
 
@@ -140,3 +149,5 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 For questions or suggestions, reach out to:  
 📧 Email: [ayushmartin@gmail.com](mailto:ayushmartin@gmail.com)  
 💻 GitHub: [Ayush-Martin](https://github.com/Ayush-Martin)
+```
+
